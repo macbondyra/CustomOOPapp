@@ -35,7 +35,7 @@ class Todo:
         with open('data.txt', 'r') as file:
             read = file.readlines()
             for i in read:
-                ready = i.split()
+                ready = i.strip()  
                 self.main_text.insert(END, ready)
 
     def add(self):
@@ -50,13 +50,10 @@ class Todo:
         erase_index = self.main_text.curselection()
         if erase_index:
             self.main_text.delete(erase_index)
-            with open('data.txt', 'r') as f:
-                new_f = f.readlines()
             with open('data.txt', 'w') as f:
-                for line in new_f:
-                    item = str(self.main_text.get(0, END))
-                    if item not in line:
-                        f.write(line)
+                for index in range(self.main_text.size()):
+                    item = self.main_text.get(index)
+                    f.write(item + '\n')
 def main():
     root = Tk()
     gui = Todo(root)
